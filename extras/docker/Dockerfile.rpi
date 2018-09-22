@@ -1,11 +1,11 @@
-FROM ncsdk_base_dl
+FROM ncsdk_rpi_base_dl
 
 # configure environment variables
 ENV NCSDK_VERSION=2.05.00.02
 ENV INSTALL_DIR=/opt/movidius
 
 ENV DIR=$INSTALL_DIR/NCSDK
-ENV SDK_DIR=$DIR/ncsdk-x86_64
+ENV SDK_DIR=$DIR/ncsdk-armv7l
 ENV SYS_INSTALL_DIR=/usr/local
 
 # install sdk and api

@@ -1,0 +1,63 @@
+FROM ubuntu:16.04
+
+# install apt requirements
+RUN apt-get update && \
+    apt-get install -y \
+    build-essential \
+    sed \
+    sudo \
+    tar \
+    udev \
+    wget \
+    unzip \
+    coreutils \
+    curl \
+    git \
+    python3 \
+    libprotobuf-dev \
+    libleveldb-dev \
+    libsnappy-dev \
+    libopencv-dev \
+    libhdf5-serial-dev \
+    protobuf-compiler \
+    libatlas-base-dev \
+    python3-dev \
+    python3-numpy \
+    automake \
+    cmake \
+    make \
+    byacc \
+    lsb-release \
+    python3-scipy \
+    libgflags-dev \
+    libgoogle-glog-dev \
+    liblmdb-dev \
+    swig3.0 \
+    graphviz \
+    libxslt-dev \
+    libxml2-dev \
+    gfortran \
+    python3-yaml \
+    python3-nose \
+    python-numpy \
+    python3-tk \
+    python3-pip \
+    python-pip \
+    libgraphviz-dev
+
+RUN apt-get install -y --no-install-recommends libboost-all-dev && \
+    apt-get clean && \
+    ldconfig
+
+# install python requirements
+ADD requirements.txt /tmp
+
+#RUN pip3 install --quiet --trusted-host files.pythonhosted.org -r /tmp/requirements.txt && \
+#    pip3 install --quiet --trusted-host files.pythonhosted.org Enum34>=1.1.6 && \
+#    pip3 install --quiet --trusted-host files.pythonhosted.org --upgrade "numpy>=1.13.0,<=1.13.3"
+
+# install opencv
+#RUN pip3 install opencv-python>=3.4.0.12 && \
+#    pip3 install opencv-contrib-python>=3.4.0.12 && \
+#    pip2 install opencv-python>=3.4.0.12 && \
+#    pip2 install opencv-contrib-python>=3.4.0.12

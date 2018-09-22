@@ -1,0 +1,24 @@
+FROM ncsdk_base
+
+RUN pip3 install --trusted-host files.pythonhosted.org tensorflow==1.7.0
+
+ENV INSTALL_DIR=/opt/movidius
+ENV CAFFE_SRC=https://github.com/weiliu89/caffe.git
+ENV CAFFE_DIR=ssd-caffe
+ENV CAFFE_BRANCH=ssd
+
+RUN mkdir -p ${INSTALL_DIR} && \
+    cd ${INSTALL_DIR} && \
+    git clone ${CAFFE_SRC} ${CAFFE_DIR} && \
+    ln -sf ${CAFFE_DIR} caffe && \
+    cd caffe && \
+    git checkout ${CAFFE_BRANCH} && \
+    sed -i 's/python_version "2"/python_version "3"/' CMakeLists.txt && \
+    sed -i 's/CPU_ONLY  "Build Caffe without CUDA support" OFF/CPU_ONLY  "Build Caffe without CUDA support" ON/' CMakeLists.txt && \
+    mkdir -p build && \
+    cd build && \
+    cmake .. && \
+    make -j 4 && \
+    make install && \
+    echo "export PYTHONPATH=${INSTALL_DIR}/caffe/python" >> /root/.bashrc
+
